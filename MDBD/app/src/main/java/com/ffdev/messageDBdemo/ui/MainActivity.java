@@ -28,16 +28,22 @@ import com.ffdev.messageDBdemo.tasks.MessageGeneratorTask;
 
 public class MainActivity extends ActionBarActivity implements MessageObserver,
                                                                LoaderManager.LoaderCallbacks<Cursor> {
-    private MessageGeneratorTask t0, t1000;
 
-    private MsgReader msgReader;
+    //DB
     private MsgWriter msgWriter;
 
+    //UI
     private ListView list;
     private MessageCursorAdapter adapter;
 
+    //Vars
     private int i = 0;
 
+    private MessageGeneratorTask t0, t1000;
+
+//--------------------------------------------
+// Interfaces
+//--------------------------------------------
     private ContentObserver observer = new ContentObserver(new Handler()) {
         @Override public void onChange(boolean selfChange) {
             getLoaderManager().restartLoader(0, null, MainActivity.this);
@@ -51,7 +57,7 @@ public class MainActivity extends ActionBarActivity implements MessageObserver,
     @Override protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         MyApplication app = (MyApplication)getApplication();
-        msgReader = app.getMsgReader();
+
         msgWriter = app.getMsgWriter();
 
         setContentView(R.layout.activity_main);
@@ -89,10 +95,7 @@ public class MainActivity extends ActionBarActivity implements MessageObserver,
     @Override public boolean onCreateOptionsMenu(Menu menu) { getMenuInflater().inflate(R.menu.menu_main, menu); return true; }
 
     @Override public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
+        final int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_send) {
@@ -107,7 +110,6 @@ public class MainActivity extends ActionBarActivity implements MessageObserver,
 // MessageObserver
 //--------------------------
     @Override public void onMessageReceived(String s) {
-        Log.i("F_F", s);
         msgWriter.saveMessage(new Message(s, System.currentTimeMillis()));
     }
 

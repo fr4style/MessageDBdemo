@@ -26,8 +26,4 @@ public class Message {
         return timestamp;
     }
 
-    public String getTimestampFormatted(){
-        DateFormat df = new SimpleDateFormat("[HH.mm.ss]");
-        return df.format(new Date(timestamp));
-    }
 }
