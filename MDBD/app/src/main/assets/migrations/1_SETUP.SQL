@@ -1,0 +1,5 @@
+CREATE TABLE 'messages'(
+    _id INTEGER PRIMARY KEY AUTOINCREMENT,
+    message TEXT,
+    ts TIMESTAMP);
+
